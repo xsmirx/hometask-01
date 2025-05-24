@@ -26,8 +26,10 @@ videosRouter.post('/', (req, res) => {
     return;
   }
 
-  const createdAt = new Date();
-  const publicationDate = createdAt.setDate(createdAt.getDate() + 1);
+  const createdDate = new Date();
+  const publicationDate = new Date(createdDate).setDate(
+    createdDate.getDate() + 1,
+  );
 
   const video: Video = {
     id: Date.now(),
@@ -35,7 +37,7 @@ videosRouter.post('/', (req, res) => {
     author: req.body.author,
     canBeDownloaded: defaultCanBeDownloaded,
     minAgeRestriction: defaultMinAgeRestriction,
-    createdAt: createdAt.toISOString(),
+    createdAt: createdDate.toISOString(),
     publicationDate: new Date(publicationDate).toISOString(),
     availableResolutions: req.body.availableResolutions,
   };
