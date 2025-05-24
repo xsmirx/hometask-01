@@ -9,8 +9,8 @@ export const setupApp = (app: Express) => {
     res.send('Hello, Express!');
   });
 
-  app.use('/hometask_01/api/videos', videosRouter);
-  app.use('/hometask_01/api/testing/all-data', testingRouter);
+  app.use('/videos', videosRouter);
+  app.use('/testing/all-data', testingRouter);
 
   return app;
 };
