@@ -13,19 +13,15 @@ describe('Videos E2E Tests', () => {
   setupApp(app);
 
   beforeAll(async () => {
-    await request(app)
-      .delete('/hometask_01/api/testing/all-data')
-      .expect(HttpStatus.NoContent);
+    await request(app).delete('/testing/all-data').expect(HttpStatus.NoContent);
   });
 
   it('should return []; GET /videos', async () => {
-    await request(app).get('/hometask_01/api/videos').expect(HttpStatus.Ok);
+    await request(app).get('/videos').expect(HttpStatus.Ok);
   });
 
   it('should return 404; GET /videos/1', async () => {
-    await request(app)
-      .get('/hometask_01/api/videos/1')
-      .expect(HttpStatus.NotFound);
+    await request(app).get('/videos/1').expect(HttpStatus.NotFound);
   });
 
   let createdVideoId: number | null = null;
@@ -38,7 +34,7 @@ describe('Videos E2E Tests', () => {
     };
 
     const response = await request(app)
-      .post('/hometask_01/api/videos')
+      .post('/videos')
       .send(createVideoBody)
       .expect(HttpStatus.Created);
 
@@ -63,7 +59,7 @@ describe('Videos E2E Tests', () => {
     };
 
     await request(app)
-      .put(`/hometask_01/api/videos/${createdVideoId}`)
+      .put(`/videos/${createdVideoId}`)
       .send(updateVideoBody)
       .expect(HttpStatus.NoContent);
   });
@@ -71,7 +67,7 @@ describe('Videos E2E Tests', () => {
   it('should delete video; DELETE /videos/:id', async () => {
     if (!createdVideoId) throw new Error('Video have not been created');
     await request(app)
-      .delete(`/hometask_01/api/videos/${createdVideoId}`)
+      .delete(`/videos/${createdVideoId}`)
       .expect(HttpStatus.NoContent);
   });
 });
