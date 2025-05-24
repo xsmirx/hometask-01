@@ -4,6 +4,9 @@ import { db } from '../../db/in-memory.db';
 import express from 'express';
 import { Video } from '../types/video';
 
+export const defaultCanBeDownloaded = false;
+export const defaultMinAgeRestriction = null;
+
 export const videosRouter = express.Router();
 
 videosRouter.get('/', (req, res) => {
@@ -18,8 +21,8 @@ videosRouter.post('/', (req, res) => {
     id: Date.now(),
     title: req.body.title,
     author: req.body.author,
-    canBeDownloaded: false,
-    minAgeRestriction: null,
+    canBeDownloaded: defaultCanBeDownloaded,
+    minAgeRestriction: defaultMinAgeRestriction,
     createdAt: createdAt.toISOString(),
     publicationDate: new Date(publicationDate).toISOString(),
     availableResolutions: req.body.availableResolutions,

@@ -1,6 +1,6 @@
 import express, { type Express } from 'express';
 import { videosRouter } from './videos/routers/videos.router';
-import { testingRouter } from './testing/routers/testing.routes';
+import { testingRouter } from './testing/routers/testing.router';
 
 export const setupApp = (app: Express) => {
   app.use(express.json());
