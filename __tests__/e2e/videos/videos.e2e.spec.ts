@@ -3,8 +3,8 @@ import request from 'supertest';
 import { setupApp } from '../../../src/setupApp';
 import { HttpStatus } from '../../../src/core/types/http-statuses';
 import {
-  CreateVideoDTO,
-  UpdateVideoDTO,
+  CreateVideoInputDTO,
+  UpdateVideoInputDTO,
 } from '../../../src/videos/dto/video.input-dto';
 import { Resolutions } from '../../../src/videos/types/video';
 
@@ -31,7 +31,7 @@ describe('Videos E2E Tests', () => {
   let createdVideoId: number | null = null;
   let createdPublicationDate: string | null = null;
   it('shold create video; POST /videos', async () => {
-    const createVideoBody: CreateVideoDTO = {
+    const createVideoBody: CreateVideoInputDTO = {
       title: 'Test video',
       author: 'Test author',
       availableResolutions: [Resolutions.P144, Resolutions.P1080],
@@ -53,7 +53,7 @@ describe('Videos E2E Tests', () => {
     const publicationDate = new Date(createdPublicationDate);
     publicationDate.setDate(publicationDate.getDate() + 10);
 
-    const updateVideoBody: UpdateVideoDTO = {
+    const updateVideoBody: UpdateVideoInputDTO = {
       title: 'Updated video',
       author: 'Updated author',
       availableResolutions: [Resolutions.P360, Resolutions.P720],

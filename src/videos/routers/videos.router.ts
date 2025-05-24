@@ -3,6 +3,9 @@ import { db } from '../../db/in-memory.db';
 
 import express from 'express';
 import { Video } from '../types/video';
+import { validateCreateInputDTO } from '../validation/validateCreateInputDTO';
+import { createErrorMessages } from '../../core/util.error';
+import { validateUpdateInputDTO } from '../validation/validateUpdateInputDTO';
 
 export const defaultCanBeDownloaded = false;
 export const defaultMinAgeRestriction = null;
@@ -14,6 +17,15 @@ videosRouter.get('/', (req, res) => {
 });
 
 videosRouter.post('/', (req, res) => {
+  const validationErrors = validateCreateInputDTO(req.body);
+
+  if (validationErrors.length > 0) {
+    res
+      .status(HttpStatus.BadRequest)
+      .send(createErrorMessages(validationErrors));
+    return;
+  }
+
   const createdAt = new Date();
   const publicationDate = createdAt.setDate(createdAt.getDate() + 1);
 
@@ -32,6 +44,11 @@ videosRouter.post('/', (req, res) => {
 });
 
 videosRouter.get('/:id', (req, res) => {
+  if (req.params.id === 'undefined' || isNaN(+req.params.id)) {
+    res.sendStatus(HttpStatus.BadRequest);
+    return;
+  }
+
   const video = db.videos.find((video) => video.id === +req.params.id);
   if (video) {
     res.status(HttpStatus.Ok).send(video);
@@ -41,6 +58,19 @@ videosRouter.get('/:id', (req, res) => {
 });
 
 videosRouter.put('/:id', (req, res) => {
+  if (req.params.id === 'undefined' || isNaN(+req.params.id)) {
+    res.sendStatus(HttpStatus.BadRequest);
+    return;
+  }
+  const validationErrors = validateUpdateInputDTO(req.body);
+
+  if (validationErrors.length > 0) {
+    res
+      .status(HttpStatus.BadRequest)
+      .send(createErrorMessages(validationErrors));
+    return;
+  }
+
   const videoIndex = db.videos.findIndex(
     (video) => video.id === +req.params.id,
   );
@@ -57,6 +87,10 @@ videosRouter.put('/:id', (req, res) => {
 });
 
 videosRouter.delete('/:id', (req, res) => {
+  if (req.params.id === 'undefined' || isNaN(+req.params.id)) {
+    res.sendStatus(HttpStatus.BadRequest);
+    return;
+  }
   const videoIndex = db.videos.findIndex(
     (video) => video.id === +req.params.id,
   );

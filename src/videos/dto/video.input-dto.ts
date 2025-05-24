@@ -1,12 +1,12 @@
 import { Resolutions } from '../types/video';
 
-export interface CreateVideoDTO {
+export interface CreateVideoInputDTO {
   title: string;
   author: string;
   availableResolutions: Resolutions[];
 }
 
-export interface UpdateVideoDTO {
+export interface UpdateVideoInputDTO {
   title: string;
   author: string;
   availableResolutions: Resolutions[];
