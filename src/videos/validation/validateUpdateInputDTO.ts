@@ -32,7 +32,10 @@ export const validateUpdateInputDTO = (body: UpdateVideoInputDTO) => {
       field: 'availableResolutions',
     });
   }
-  if (!body.canBeDownloaded || typeof body.canBeDownloaded !== 'boolean') {
+  if (
+    body.canBeDownloaded === undefined ||
+    typeof body.canBeDownloaded !== 'boolean'
+  ) {
     errors.push({
       message: 'Invalid canBeDownloaded',
       field: 'canBeDownloaded',
@@ -53,6 +56,9 @@ export const validateUpdateInputDTO = (body: UpdateVideoInputDTO) => {
   if (
     !body.publicationDate ||
     typeof body.publicationDate !== 'string' ||
+    !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?Z$/.test(
+      body.publicationDate,
+    ) ||
     isNaN(Date.parse(body.publicationDate)) ||
     new Date(body.publicationDate).getTime() < Date.now()
   ) {

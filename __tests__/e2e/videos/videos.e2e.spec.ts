@@ -17,7 +17,7 @@ describe('Videos E2E Tests', () => {
   });
 
   it('should return []; GET /videos', async () => {
-    await request(app).get('/videos').expect(HttpStatus.Ok);
+    await request(app).get('/videos').expect(HttpStatus.Ok).expect([]);
   });
 
   it('should return 404; GET /videos/1', async () => {
@@ -26,6 +26,7 @@ describe('Videos E2E Tests', () => {
 
   let createdVideoId: number | null = null;
   let createdPublicationDate: string | null = null;
+
   it('shold create video; POST /videos', async () => {
     const createVideoBody: CreateVideoInputDTO = {
       title: 'Test video',
