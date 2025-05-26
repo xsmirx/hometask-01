@@ -1,0 +1,5 @@
+tags:
+  - name: Testing
+    description: API for clearing the database
+  - name: Videos
+    description: API for managing drivers
